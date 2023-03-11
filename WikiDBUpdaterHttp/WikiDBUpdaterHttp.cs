@@ -98,14 +98,14 @@ namespace WikiDBUpdaterHttp
         /// <summary>
         /// Parses the YYYY-MM-DD string into DateTime
         /// </summary>
-        /// <param name="_yyyymmdd">Date in a YYYY-MM-DD format</param>
-        /// <param name="_date">out for a date</param>
+        /// <param name="yyyymmdd">Date in a YYYY-MM-DD format</param>
+        /// <param name="date">out for a date</param>
         /// <returns>true if date was correctly parsed</returns>
-        bool validateDate(string _yyyymmdd, out DateTime _date)
+        bool validateDate(string yyyymmdd, out DateTime date)
         {
-            _date = DateTime.Now;
+            date = DateTime.Now;
             int year, month, day;
-            string[] dateArray = _yyyymmdd.Split('-');
+            string[] dateArray = yyyymmdd.Split('-');
 
             if (dateArray.Length != 3)
                 return false;
@@ -117,7 +117,7 @@ namespace WikiDBUpdaterHttp
             if (!int.TryParse(dateArray[2], out day))
                 return false;
 
-            _date = new DateTime(year, month, day);
+            date = new DateTime(year, month, day);
             return true;
         }
 

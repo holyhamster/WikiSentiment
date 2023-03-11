@@ -11,9 +11,9 @@ namespace WikiSentiment
     {
         private readonly IConfiguration config;
 
-        public ConfigurationWrapper(IConfiguration _config)
+        public ConfigurationWrapper(IConfiguration config)
         {
-            config = _config;
+            this.config = config;
         }
 
         /// <summary>

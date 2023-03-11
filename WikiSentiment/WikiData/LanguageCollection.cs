@@ -19,33 +19,33 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Build daily collection of articles in single language
         /// </summary>
-        /// <param name="_client">Http client for requests</param>
-        /// <param name="_date"></param>
-        /// <param name="_languageCode">Two letter code</param>
-        /// <param name="_exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
-        /// <param name="_keepMax">keep X amount of articles</param>
+        /// <param name="client">Http client for requests</param>
+        /// <param name="date"></param>
+        /// <param name="languageCode">Two letter code</param>
+        /// <param name="exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
+        /// <param name="keepMax">keep X amount of articles</param>
         /// <returns></returns>
         public static async Task<LanguageCollection> Create(
-            HttpClient _client, DateTime _date,
-            string _languageCode, Dictionary<string, string[]> _exceptions,
-            int _keepMax)
+            HttpClient client, DateTime date,
+            string languageCode, Dictionary<string, string[]> exceptions,
+            int keepMax)
         {
             //get total views for a regional wikipedia
-            var totalviews = await WikiAPIRequests.GetTotalViews(_client, _languageCode, _date);
+            var totalviews = await WikiAPIRequests.GetTotalViews(client, languageCode, date);
 
             //get raw (title, views) data
-            var articleEntries = await WikiAPIRequests.GetArticleList(_client, _languageCode, _date);
+            var articleEntries = await WikiAPIRequests.GetArticleList(client, languageCode, date);
 
             var createdArticles = new Dictionary<string, Article>();
 
             foreach (var iEntry in articleEntries)
             {
                 //stop when created enough articles
-                if (createdArticles.Count >= _keepMax)
+                if (createdArticles.Count >= keepMax)
                     break;
 
                 //if the article name is not on the exceptions list
-                if (!isException(iEntry.title, _languageCode, _exceptions))
+                if (!isException(iEntry.title, languageCode, exceptions))
                 {
                     //if already createed an article with this title,
                     //add its views to the record. otherwise make a new article
@@ -56,7 +56,7 @@ namespace WikiSentiment.DataObjects
 
                     else
                     {
-                        var article = await Article.Create(_client, iEntry.title, _languageCode, iEntry.views);
+                        var article = await Article.Create(client, iEntry.title, languageCode, iEntry.views);
                         createdArticles[article.ttl] = article;
                     }
                 }
@@ -64,7 +64,7 @@ namespace WikiSentiment.DataObjects
 
             return new LanguageCollection()
             {
-                countrycode = _languageCode,
+                countrycode = languageCode,
                 totalviews = totalviews,
                 articles = createdArticles.Values.ToList()
             };
@@ -73,17 +73,17 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Returns bool if given title is among exceptions
         /// </summary>
-        /// <param name="_title">String of a title</param>
-        /// <param name="_language">Two letter language code</param>
+        /// <param name="title">String of a title</param>
+        /// <param name="language">Two letter language code</param>
         /// <param name="exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
         /// <returns></returns>
-        static bool isException(string _title, string _language, Dictionary<string, string[]> exceptions)
+        static bool isException(string title, string language, Dictionary<string, string[]> exceptions)
         {
-            var title = _title.ToLower();
+            title = title.ToLower();
             //check regional exception array
-            if (exceptions.ContainsKey(_language))
+            if (exceptions.ContainsKey(language))
             {
-                foreach (string iException in exceptions[_language])
+                foreach (string iException in exceptions[language])
                     if (title.Contains(iException))
                         return true;
             }

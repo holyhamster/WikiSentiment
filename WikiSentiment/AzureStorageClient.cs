@@ -10,9 +10,9 @@ namespace WikiSentiment
     {
         TableClient client;
 
-        public AzureStorageClient(TableClient _client)
+        public AzureStorageClient(TableClient client)
         {
-            client = _client;
+            this.client = client;
         }
 
         /// <summary>
@@ -21,11 +21,11 @@ namespace WikiSentiment
         /// <param name="_YYYYMM"></param>
         /// <param name="_DD"></param>
         /// <returns></returns>
-        public async Task<string> Load(DateTime _date)
+        public async Task<string> Load(DateTime date)
         {
             //Format is YYYY-MM as pkey, DD as rkey
             AsyncPageable<DayEntity> result = client.QueryAsync<DayEntity>(
-                e => e.PartitionKey == $"{ _date.Year:D4}-{_date.Month:D2}" && e.RowKey == $"{_date.Day:D2}");
+                e => e.PartitionKey == $"{ date.Year:D4}-{date.Month:D2}" && e.RowKey == $"{date.Day:D2}");
 
             await foreach (var res in result)
             {
@@ -39,16 +39,16 @@ namespace WikiSentiment
         /// <summary>
         /// Uploads string to azure tables
         /// </summary>
-        /// <param name="_date"></param>
-        /// <param name="_content"></param>
+        /// <param name="date"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        public async Task Upload(DateTime _date, string _content)
+        public async Task Upload(DateTime date, string content)
         {
             //Format is YYYY-MM as pkey, DD as rkey
             var dayEntity = new DayEntity() { 
-                PartitionKey = $"{_date.Year:D4}-{_date.Month:D2}", 
-                RowKey = $"{_date.Day:D2}", 
-                DailyData = _content };
+                PartitionKey = $"{date.Year:D4}-{date.Month:D2}", 
+                RowKey = $"{date.Day:D2}", 
+                DailyData = content };
 
             await client.UpsertEntityAsync(dayEntity);
         }

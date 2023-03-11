@@ -8,7 +8,7 @@ namespace WikiSentiment
 {
     public interface IDBClient
     {
-        Task Upload(DateTime _date, string _content);
+        Task Upload(DateTime date, string content);
         Task<string> Load(DateTime _date);
     }
 }

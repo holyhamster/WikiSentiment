@@ -21,22 +21,22 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Builds an article 
         /// </summary>
-        /// <param name="_client">http client, wiki API headers required</param>
-        /// <param name="_title">article title</param>
-        /// <param name="_countryCode">two letter language code</param>
-        /// <param name="_views">article views</param>
+        /// <param name="client">http client, wiki API headers required</param>
+        /// <param name="title">article title</param>
+        /// <param name="countryCode">two letter language code</param>
+        /// <param name="views">article views</param>
         /// <returns></returns>
-        public static async Task<Article> Create(HttpClient _client, string _title, string _countryCode, int _views)
+        public static async Task<Article> Create(HttpClient client, string title, string countryCode, int views)
         {
             Article result = new Article()
             {
-                ttl = _title,
-                vws = _views,
+                ttl = title,
+                vws = views,
                 lngl = new Dictionary<string, string>()
             };
 
             //get english title of given article
-            string langlinkTitle = await WikiAPIRequests.GetLangLink(_client, _title, _countryCode);
+            string langlinkTitle = await WikiAPIRequests.GetLangLink(client, title, countryCode);
 
             //if failed to get english article, check if its a redirect and try again
             if (langlinkTitle != "")
@@ -46,11 +46,11 @@ namespace WikiSentiment.DataObjects
             else
             {
                 //if article is a redirect, fill in correct title and try to get a new langlink
-                var redirectTitle = await WikiAPIRequests.GetRedirect(_client, _title, _countryCode);
+                var redirectTitle = await WikiAPIRequests.GetRedirect(client, title, countryCode);
                 if (redirectTitle != "")
                 {
                     result.ttl = redirectTitle;
-                    var redirectLanglink = await WikiAPIRequests.GetLangLink(_client, redirectTitle, _countryCode);
+                    var redirectLanglink = await WikiAPIRequests.GetLangLink(client, redirectTitle, countryCode);
 
                     if (redirectLanglink != "")
                         result.lngl["en"] = redirectLanglink;

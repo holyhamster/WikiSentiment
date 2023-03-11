@@ -25,22 +25,22 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Build a collection for a day with given languages
         /// </summary>
-        /// <param name="_date"></param>
-        /// <param name="_languageCodes">Array of two letter language codes</param>
-        /// <param name="_exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
-        /// <param name="_client">Client for requests, wiki API headers required</param>
+        /// <param name="date"></param>
+        /// <param name="languageCode">Array of two letter language codes</param>
+        /// <param name="exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
+        /// <param name="client">Client for requests, wiki API headers required</param>
         /// <param name="logger"></param>
         /// <returns></returns>
         public async static Task<DailyCollection> Create(
-           DateTime _date, string[] _languageCodes, Dictionary<string, string[]> _exceptions, 
-           HttpClient _client, ILogger logger)
+           DateTime date, string[] languageCode, Dictionary<string, string[]> exceptions, 
+           HttpClient client, ILogger logger)
         {
             //start daily data tasks for each country
             var regionalTasks = new Dictionary<string, Task<LanguageCollection>>();
-            foreach (var iLanguage in _languageCodes)
+            foreach (var iLanguage in languageCode)
             {
                 regionalTasks[iLanguage] = LanguageCollection.Create(
-                        _client, _date, iLanguage, _exceptions, keepArticles);
+                        client, date, iLanguage, exceptions, keepArticles);
             }
 
             //try waiting for each task, log any errors
@@ -52,7 +52,7 @@ namespace WikiSentiment.DataObjects
                     regionalCollections[iCountry] = result; }
                 catch (Exception e) {
                     logger.LogError($"Error building {iCountry}-collection for " +
-                        $"{_date.Year}-{_date.Month:D2}-{_date.Day:D2}: {e.Message}"); }
+                        $"{date.Year}-{date.Month:D2}-{date.Day:D2}: {e.Message}"); }
             }
 
             var featuredCountries = getFeaturedCountries(regionalCollections, featureArticles);
@@ -67,17 +67,17 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Updates old colection with new content, compiles new featured list
         /// </summary>
-        /// <param name="_base"></param>
-        /// <param name="_newAdditions"></param>
+        /// <param name="base"></param>
+        /// <param name="newAdditions"></param>
         /// <returns></returns>
-        public static DailyCollection UpdateGiven(DailyCollection _base, DailyCollection _newAdditions)
+        public static DailyCollection UpdateGiven(DailyCollection @base, DailyCollection newAdditions)
         {
-            var newCollection = new Dictionary<string, LanguageCollection>(_base.countrydailydict);
+            var newCollection = new Dictionary<string, LanguageCollection>(@base.countrydailydict);
 
             //override old data with new ones
-            foreach(string iCountry in _newAdditions.countrydailydict.Keys)
+            foreach(string iCountry in newAdditions.countrydailydict.Keys)
             {
-                newCollection[iCountry] = _newAdditions.countrydailydict[iCountry];
+                newCollection[iCountry] = newAdditions.countrydailydict[iCountry];
             }
             var featured = getFeaturedCountries(newCollection, featureArticles);
 
@@ -91,24 +91,24 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Get ordered list of languages with the top viewed (proportionally) articles
         /// </summary>
-        /// <param name="_collection"></param>
-        /// <param name="_featuredAmount">amount of languages to keep</param>
+        /// <param name="collection"></param>
+        /// <param name="featuredAmount">amount of languages to keep</param>
         /// <returns>list of two letter language codes</returns>
         static List<string> getFeaturedCountries(
-            Dictionary<string, LanguageCollection> _collection, int _featuredAmount)
+            Dictionary<string, LanguageCollection> collection, int featuredAmount)
         {
             //compile the list of country codes and viewership scores for top articles
             var languageTopArticlesData = new List<(string countrycode, float percentage)>();
-            foreach (string iLanguage in _collection.Keys)
+            foreach (string iLanguage in collection.Keys)
             {
                 languageTopArticlesData.Add((iLanguage,
-                    (100f * _collection[iLanguage].articles[0].vws) / _collection[iLanguage].totalviews));
+                    (100f * collection[iLanguage].articles[0].vws) / collection[iLanguage].totalviews));
             }
 
             //order data in the descending order
             languageTopArticlesData = (languageTopArticlesData.OrderBy(data => data.percentage)).Reverse().ToList();
 
-            var amountToFeature = Math.Min(_featuredAmount, _collection.Count);
+            var amountToFeature = Math.Min(featuredAmount, collection.Count);
             List<string> result = new List<string>();
 
             //return countrycodes

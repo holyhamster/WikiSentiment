@@ -45,12 +45,12 @@ namespace WikiDBUpdaterTimer
                 articleExceptions, getHttpClient(config, log), new AzureStorageClient(tableClient), log);
         }
 
-        HttpClient getHttpClient(ConfigurationWrapper _config, ILogger log)
+        HttpClient getHttpClient(ConfigurationWrapper config, ILogger log)
         {
             var result = new HttpClient();
 
-            var apiToken = _config.GetValue<string>("WikiKeys:WikiAPIToken");
-            var contact = _config.GetValue<string>("WikiKeys:WikiUserContact");
+            var apiToken = config.GetValue<string>("WikiKeys:WikiAPIToken");
+            var contact = config.GetValue<string>("WikiKeys:WikiUserContact");
             result.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
             result.DefaultRequestHeaders.Add("Api-User-Agent", contact);
 

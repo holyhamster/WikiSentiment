@@ -12,28 +12,28 @@ namespace WikiSentiment
         /// <summary>
         /// Creates article collections for given languages. Goes backward from given date
         /// </summary>
-        /// <param name="_date">Starting date</param>
-        /// <param name="_daysToGo">Collections to create</param>
-        /// <param name="_discardOldEntries">If true will not discard all existing daily data in the DB</param>
-        /// <param name="_languageCodes">list of two letter language codes</param>
-        /// <param name="_exceptions"></param>
-        /// <param name="_httpClient">http client with API headers</param>
-        /// <param name="_dbClient"></param>
-        /// <param name="_logger"></param>
+        /// <param name="date">Starting date</param>
+        /// <param name="daysToGo">Collections to create</param>
+        /// <param name="discardOldEntries">If true will not discard all existing daily data in the DB</param>
+        /// <param name="languageCodes">list of two letter language codes</param>
+        /// <param name="exceptions"></param>
+        /// <param name="httpClient">http client with API headers</param>
+        /// <param name="dbClient"></param>
+        /// <param name="logger"></param>
         /// <returns></returns>
-        public static async Task updateDatabase(DateTime _date, int _daysToGo, bool _discardOldEntries,
-            string[] _languageCodes, Dictionary<string, string[]> _exceptions, 
-            HttpClient _httpClient, IDBClient _dbClient, ILogger _logger)
+        public static async Task updateDatabase(DateTime date, int daysToGo, bool discardOldEntries,
+            string[] languageCodes, Dictionary<string, string[]> exceptions, 
+            HttpClient httpClient, IDBClient dbClient, ILogger logger)
         {
-            for (int i = _daysToGo; i > 0; i--)
+            for (int i = daysToGo; i > 0; i--)
             {
-                var newCollection = await DailyCollection.Create(_date, _languageCodes, 
-                    _exceptions, _httpClient, _logger);
+                var newCollection = await DailyCollection.Create(date, languageCodes, 
+                    exceptions, httpClient, logger);
 
                 //if not discarding old data, use it as a base for new collection
-                if (!_discardOldEntries)
+                if (!discardOldEntries)
                 {
-                    var dbRequest = await _dbClient.Load(_date);
+                    var dbRequest = await dbClient.Load(date);
                     DailyCollection? oldDaily = null;
                     try
                     {
@@ -41,8 +41,8 @@ namespace WikiSentiment
                     }
                     catch (Exception _ex)
                     {
-                        _logger.LogError($"Skipped reading old data on " +
-                            $"{_date.Year}-{_date.Month}-{_date.Day:D2}: ${_ex}");
+                        logger.LogError($"Skipped reading old data on " +
+                            $"{date.Year}-{date.Month}-{date.Day:D2}: ${_ex}");
                     }
                     if (oldDaily != null && oldDaily.IsValid())
                         newCollection = DailyCollection.UpdateGiven(oldDaily, newCollection);
@@ -50,12 +50,12 @@ namespace WikiSentiment
 
 
                 if (newCollection.IsValid())
-                    await _dbClient.Upload(_date, newCollection.ToJSON());
+                    await dbClient.Upload(date, newCollection.ToJSON());
                 else
-                    _logger.LogError($"Skipped uploading collection " +
-                        $"{_date.Year}-{_date.Month}-{_date.Day:D2}");
+                    logger.LogError($"Skipped uploading collection " +
+                        $"{date.Year}-{date.Month}-{date.Day:D2}");
 
-                _date = _date.AddDays(-1);
+                date = date.AddDays(-1);
             }
         }
     }

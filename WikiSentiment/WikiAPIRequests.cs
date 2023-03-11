@@ -13,21 +13,21 @@ namespace WikiSentiment
         /// <summary>
         /// Gets english title of given article. Returns empty string if none exist
         /// </summary>
-        /// <param name="_client">http client, api headers required</param>
-        /// <param name="_title"></param>
-        /// <param name="_countryCode">two letter language code</param>
+        /// <param name="client">http client, api headers required</param>
+        /// <param name="title"></param>
+        /// <param name="countryCode">two letter language code</param>
         /// <returns>English title, returns empty if none</returns>
         public static async Task<string> GetLangLink(
-                HttpClient _client, string _title, string _countryCode)
+                HttpClient client, string title, string countryCode)
         {
             string languageTarget = "en";
-            _title = stripSubmenuLink(_title);
+            title = stripSubmenuLink(title);
             JsonNode langlinkNode;
 
-            string url = $"https://{_countryCode}.wikipedia.org/w/api.php?action=query&titles=" +
-                $"{_title}&prop=langlinks&format=json&lllang={languageTarget}";
+            string url = $"https://{countryCode}.wikipedia.org/w/api.php?action=query&titles=" +
+                $"{title}&prop=langlinks&format=json&lllang={languageTarget}";
 
-            var langlinkResponse = await _client.GetStringAsync(url);
+            var langlinkResponse = await client.GetStringAsync(url);
             var jsonObject = JsonNode.Parse(langlinkResponse);
 
             //validate json response, return empty string if failed
@@ -52,17 +52,17 @@ namespace WikiSentiment
         /// <summary>
         /// Returns title, if given article is a redirect page. Returns empty if not
         /// </summary>
-        /// <param name="_client"></param>
-        /// <param name="_title"></param>
-        /// <param name="_country">two letter language code</param>
+        /// <param name="client"></param>
+        /// <param name="title"></param>
+        /// <param name="country">two letter language code</param>
         /// <returns>Title of a redirect page, returns empty if not</returns>
         public static async Task<string> GetRedirect(
-            HttpClient _client, string _title, string _country)
+            HttpClient client, string title, string country)
         {
-            _title = stripSubmenuLink(_title);
-            var request = await _client.GetStringAsync(
-                $"https://{_country}.wikipedia.org/w/api.php?action=parse&" +
-                $"formatversion=2&page={_title}&prop=wikitext&format=json");
+            title = stripSubmenuLink(title);
+            var request = await client.GetStringAsync(
+                $"https://{country}.wikipedia.org/w/api.php?action=parse&" +
+                $"formatversion=2&page={title}&prop=wikitext&format=json");
 
             JsonObject jObject = JsonNode.Parse(request).AsObject();
 
@@ -88,16 +88,16 @@ namespace WikiSentiment
         /// <summary>
         /// Get top pairs of (title, views) for given language
         /// </summary>
-        /// <param name="_client">Http client with API headers</param>
-        /// <param name="_languageCode">Two letter country code</param>
-        /// <param name="_date">Date for lookup</param>
+        /// <param name="client">Http client with API headers</param>
+        /// <param name="languageCode">Two letter country code</param>
+        /// <param name="date">Date for lookup</param>
         /// <returns>Tuple with articleArray(name, views) of articles</returns>
         public static async Task<(string title, int views)[]>
-            GetArticleList(HttpClient _client, string _languageCode, DateTime _date)
+            GetArticleList(HttpClient client, string languageCode, DateTime date)
         {
-            var articlesString = await _client.GetStringAsync(
+            var articlesString = await client.GetStringAsync(
                     "https://wikimedia.org/api/rest_v1/metrics/pageviews/" +
-                    $"top/{_languageCode}.wikipedia.org/all-access/{_date.Year}/{_date.Month:D2}/{_date.Day:D2}");
+                    $"top/{languageCode}.wikipedia.org/all-access/{date.Year}/{date.Month:D2}/{date.Day:D2}");
 
             var jArticleArray = JsonNode.Parse(articlesString).AsObject()["items"][0]["articles"].AsArray();
 
@@ -116,17 +116,17 @@ namespace WikiSentiment
         /// <summary>
         /// Gets total daily views for given language
         /// </summary>
-        /// <param name="_client"></param>
-        /// <param name="_languageCode"></param>
-        /// <param name="_date"></param>
+        /// <param name="client"></param>
+        /// <param name="languageCode"></param>
+        /// <param name="date"></param>
         /// <returns></returns>
         public static async Task<int> GetTotalViews(
-            HttpClient _client, string _languageCode, DateTime _date)
+            HttpClient client, string languageCode, DateTime date)
         {
-            var viewsString = await _client.GetStringAsync(
+            var viewsString = await client.GetStringAsync(
                     "https://wikimedia.org/api/rest_v1/metrics/pageviews/" +
-                    $"aggregate/{_languageCode}.wikipedia.org/all-access/user/daily/" +
-                    $"{_date.Year}{_date.Month:D2}{_date.Day:D2}/{_date.Year}{_date.Month:D2}{_date.Day:D2}");
+                    $"aggregate/{languageCode}.wikipedia.org/all-access/user/daily/" +
+                    $"{date.Year}{date.Month:D2}{date.Day:D2}/{date.Year}{date.Month:D2}{date.Day:D2}");
 
             JsonObject jObject = JsonNode.Parse(viewsString).AsObject();
 
@@ -138,27 +138,27 @@ namespace WikiSentiment
                 return (int)JsonNode.Parse(viewsString).AsObject()["items"][0]["views"];
             }
 
-            throw new HttpRequestException($"Http response has bad format. Date: {_date}; language:{_languageCode}");
+            throw new HttpRequestException($"Http response has bad format. Date: {date}; language:{languageCode}");
         }
 
         
-        static string normalizeTitle(string _title)
+        static string normalizeTitle(string title)
         {
 
-            return _title.Trim().Replace(' ', '_');
+            return title.Trim().Replace(' ', '_');
         }
 
         /// <summary>
         /// Strip subitems from a title (in "/wiki/Albert_Einstein#Childhood", #Childhood is a subitem)
         /// </summary>
-        /// <param name="_title"></param>
+        /// <param name="title"></param>
         /// <returns></returns>
-        static string stripSubmenuLink(string _title)
+        static string stripSubmenuLink(string title)
         {
-            if (_title.Contains('#'))
-                return _title.Split('#', 2)[0];
+            if (title.Contains('#'))
+                return title.Split('#', 2)[0];
             else
-                return _title;
+                return title;
         }
     }
 }
