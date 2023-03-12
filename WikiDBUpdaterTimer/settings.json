@@ -35,7 +35,8 @@
         "template:",
         ".svg",
         ".jpg",
-        ".ogg"
+        ".ogg",
+        ".png"
       ]
     }
   }

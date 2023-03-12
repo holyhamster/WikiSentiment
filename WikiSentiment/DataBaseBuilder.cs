@@ -23,7 +23,7 @@ namespace WikiSentiment
         /// <param name="logger"></param>
         /// <returns></returns>
         public static async Task updateDatabase(DateTime date, int daysToGo, bool discardOldEntries,
-            string[] languageCodes, Dictionary<string, string[]> exceptions, 
+            HashSet<string> languageCodes, Dictionary<string, HashSet<string>> exceptions, 
             HttpClient httpClient, IDataBaseClient dbClient, ILogger logger)
         {
             for (int i = daysToGo; i > 0; i--)

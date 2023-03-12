@@ -27,7 +27,7 @@ namespace WikiSentiment.DataObjects
         /// <returns></returns>
         public static async Task<LanguageCollection> Create(
             HttpClient client, DateTime date,
-            string languageCode, Dictionary<string, string[]> exceptions,
+            string languageCode, Dictionary<string, HashSet<string>> exceptions,
             int keepMax)
         {
             //get total views for a regional wikipedia
@@ -77,7 +77,7 @@ namespace WikiSentiment.DataObjects
         /// <param name="language">Two letter language code</param>
         /// <param name="exceptions">Dictionary with exceptions in {"en": ["Main_Page", "Search"]} format</param>
         /// <returns></returns>
-        static bool isException(string title, string language, Dictionary<string, string[]> exceptions)
+        static bool isException(string title, string language, Dictionary<string, HashSet<string>> exceptions)
         {
             title = title.ToLower();
             //check regional exception array

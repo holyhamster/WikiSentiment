@@ -32,7 +32,7 @@ namespace WikiSentiment.DataObjects
         /// <param name="logger"></param>
         /// <returns></returns>
         public async static Task<DailyCollection> Create(
-           DateTime date, string[] languageCode, Dictionary<string, string[]> exceptions, 
+           DateTime date, HashSet<string> languageCode, Dictionary<string, HashSet<string>> exceptions, 
            HttpClient client, ILogger logger)
         {
             //start daily data tasks for each country

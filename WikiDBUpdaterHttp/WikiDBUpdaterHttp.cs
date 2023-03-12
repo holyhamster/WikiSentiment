@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using Azure.Data.Tables;
 using WikiSentiment;
-
+using Azure.Core.Cryptography;
 
 namespace WikiDBUpdaterHttp
 {
@@ -24,20 +24,23 @@ namespace WikiDBUpdaterHttp
     {
         private ConfigurationWrapper config;
 
-        private string[] allLanguageCodes;
+        private HashSet<string> allLanguageCodes;
 
         private HttpClient httpClient;
 
-        private Dictionary<string, string[]> articleExceptions;
+        private Dictionary<string, HashSet<string>> articleExceptions;
 
         public WikiDBUpdaterHttp(IConfiguration iConfig)
         {
             config = new ConfigurationWrapper(iConfig);
 
-            articleExceptions = config.GetValue<Dictionary<string, string[]>>
+            var exceptionList = config.GetValue<Dictionary<string, string[]>>
                 ("FunctionValues:CountryExceptions");
+            articleExceptions = new Dictionary<string, HashSet<string>>();
+            foreach (var iKey in exceptionList.Keys)
+                articleExceptions[iKey] = exceptionList[iKey].ToHashSet();
 
-            allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes");
+            allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes").ToHashSet();
 
 
             httpClient = new HttpClient();
@@ -78,7 +81,7 @@ namespace WikiDBUpdaterHttp
                     return new BadRequestObjectResult($"Missing parameter: {nameof(daysToGoString)}");
 
 
-            string[] languages = allLanguageCodes;
+            HashSet<string> languages = allLanguageCodes;
             string languageStrings = req.Query["languages"];
             if (languageStrings != null &&
                 !validateLanguages(languageStrings, out languages))
@@ -99,13 +102,13 @@ namespace WikiDBUpdaterHttp
         /// <summary>
         /// Validates list of languages in "","","" format
         /// </summary>
-        /// <param name="_language">string in "","","", format</param>
-        /// <param name="_languageArray">out for an output array</param>
+        /// <param name="proposedLanguagesString">string in "","","", format</param>
+        /// <param name="languageArray">out for an output array</param>
         /// <returns>returns true if string parsed into array</returns>
-        bool validateLanguages(string _language, out string[] _languageArray)
+        bool validateLanguages(string proposedLanguagesString, out HashSet<string> languageArray)
         {
-            _languageArray = _language.ToLowerInvariant().Split(',');
-            foreach (var iLanguage in _languageArray)
+            languageArray = proposedLanguagesString.ToLowerInvariant().Split(',').ToHashSet();
+            foreach (var iLanguage in languageArray)
             {
                 if (!allLanguageCodes.Contains(iLanguage))
                 {
