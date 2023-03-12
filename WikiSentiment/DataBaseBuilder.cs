@@ -7,10 +7,11 @@ using WikiSentiment.DataObjects;
 
 namespace WikiSentiment
 {
-    public static class DBUpdates
+    public static class DataBaseBuilder
     {
         /// <summary>
-        /// Creates article collections for given languages. Goes backward from given date
+        /// Creates article collections for given languages
+        /// Uploads them into given DataBaseClient
         /// </summary>
         /// <param name="date">Starting date</param>
         /// <param name="daysToGo">Collections to create</param>
@@ -23,7 +24,7 @@ namespace WikiSentiment
         /// <returns></returns>
         public static async Task updateDatabase(DateTime date, int daysToGo, bool discardOldEntries,
             string[] languageCodes, Dictionary<string, string[]> exceptions, 
-            HttpClient httpClient, IDBClient dbClient, ILogger logger)
+            HttpClient httpClient, IDataBaseClient dbClient, ILogger logger)
         {
             for (int i = daysToGo; i > 0; i--)
             {

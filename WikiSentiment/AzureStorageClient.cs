@@ -6,7 +6,7 @@ namespace WikiSentiment
     /// <summary>
     /// API wrapper for azure table storage
     /// </summary>
-    public class AzureStorageClient:IDBClient
+    public class AzureStorageClient:IDataBaseClient
     {
         TableClient client;
 

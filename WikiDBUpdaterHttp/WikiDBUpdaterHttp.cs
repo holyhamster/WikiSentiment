@@ -17,7 +17,8 @@ using WikiSentiment;
 namespace WikiDBUpdaterHttp
 {
     /// <summary>
-    /// HTTP triggered function that updates DB with new wiki collections
+    /// HTTP triggered Azure Function
+    /// Grabs parameter from the url and calls DBUpdater
     /// </summary>
     public class WikiDBUpdaterHttp
     {
@@ -62,7 +63,7 @@ namespace WikiDBUpdaterHttp
             ILogger log)
         {
             //url schema is /WikiDBUpdaterHttp?date=2021-12-31&days=3&discard&language=de,fr
-            //get and validate options
+            //everything except date is optional
             string YYYYMMDD = req.Query["date"];
             DateTime startDate;
             if (YYYYMMDD == null)
@@ -72,24 +73,24 @@ namespace WikiDBUpdaterHttp
 
             int daysToGo = 1;
             string daysToGoString = req.Query["days"];
-            if (daysToGoString != null)
-                if (!int.TryParse(daysToGoString, out daysToGo))
-                    return new BadRequestObjectResult("Bad days parameter: " + daysToGoString);
+            if (daysToGoString != null &&
+                !int.TryParse(daysToGoString, out daysToGo))
+                    return new BadRequestObjectResult($"Missing parameter: {nameof(daysToGoString)}");
 
 
             string[] languages = allLanguageCodes;
             string languageStrings = req.Query["languages"];
-            if (languageStrings != null)
-                if (!validateLanguages(languageStrings, out languages))
-                    return new BadRequestObjectResult("Bad languages parameter: " + languageStrings);
+            if (languageStrings != null &&
+                !validateLanguages(languageStrings, out languages))
+                return new BadRequestObjectResult("Bad languages parameter: " + languageStrings);
 
 
             string discardString = req.Query["discard"];
             bool discardOldData = discardString != null ? true : false;
 
-            IDBClient dbClient = new AzureStorageClient(tableClient);
+            IDataBaseClient dbClient = new AzureStorageClient(tableClient);
 
-            await DBUpdates.updateDatabase(startDate, daysToGo, discardOldData, languages, 
+            await DataBaseBuilder.updateDatabase(startDate, daysToGo, discardOldData, languages, 
                 articleExceptions, httpClient, dbClient, log);
             
             return new OkObjectResult("Successfull execution");
@@ -130,7 +131,7 @@ namespace WikiDBUpdaterHttp
         /// <returns>returns true if string parsed into array</returns>
         bool validateLanguages(string _language, out string[] _languageArray)
         {
-            _languageArray = _language.ToLower().Split(',');
+            _languageArray = _language.ToLowerInvariant().Split(',');
             foreach (var iLanguage in _languageArray)
             {
                 if (!allLanguageCodes.Contains(iLanguage))

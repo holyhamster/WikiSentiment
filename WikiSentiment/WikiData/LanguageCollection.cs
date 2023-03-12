@@ -45,21 +45,21 @@ namespace WikiSentiment.DataObjects
                     break;
 
                 //if the article name is not on the exceptions list
-                if (!isException(iEntry.title, languageCode, exceptions))
+                if (isException(iEntry.title, languageCode, exceptions))
+                    continue;
+
+                //if already createed an article with this title,
+                //add its views to the record. otherwise make a new article
+                bool hasThisTitle = createdArticles.ContainsKey(iEntry.title);
+
+                if (hasThisTitle)
+                    createdArticles[iEntry.title].vws += iEntry.views;
+                else
                 {
-                    //if already createed an article with this title,
-                    //add its views to the record. otherwise make a new article
-                    bool hasThisTitle = createdArticles.ContainsKey(iEntry.title);
-
-                    if (hasThisTitle)
-                        createdArticles[iEntry.title].vws += iEntry.views;
-
-                    else
-                    {
-                        var article = await Article.Create(client, iEntry.title, languageCode, iEntry.views);
-                        createdArticles[article.ttl] = article;
-                    }
+                    var article = await Article.Create(client, iEntry.title, languageCode, iEntry.views);
+                    createdArticles[article.ttl] = article;
                 }
+                
             }
 
             return new LanguageCollection()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WikiSentiment
 {
-    public interface IDBClient
+    public interface IDataBaseClient
     {
         Task Upload(DateTime date, string content);
         Task<string> Load(DateTime _date);

@@ -7,7 +7,7 @@ namespace WikiSentiment
     /// <summary>
     /// Wraps IConfiguration, allowing it to work with localsettings.json as well as Azure Configurations
     /// </summary>
-    public class ConfigurationWrapper //TODO: implement as IConfiguration
+    public class ConfigurationWrapper 
     {
         private readonly IConfiguration config;
 

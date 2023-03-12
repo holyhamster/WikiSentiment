@@ -41,7 +41,7 @@ namespace WikiDBUpdaterTimer
             bool discardOldData = true;
             int daysToUpdate = 1;
 
-            await DBUpdates.updateDatabase(date, daysToUpdate, discardOldData, allLanguageCodes, 
+            await DataBaseBuilder.updateDatabase(date, daysToUpdate, discardOldData, allLanguageCodes, 
                 articleExceptions, getHttpClient(config, log), new AzureStorageClient(tableClient), log);
         }
 

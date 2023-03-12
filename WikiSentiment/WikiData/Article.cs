@@ -42,21 +42,19 @@ namespace WikiSentiment.DataObjects
             if (langlinkTitle != "")
             {
                 result.lngl["en"] = langlinkTitle;
+                return result;
             }
-            else
+
+            //if article is a redirect, fill in correct title and try to get a new langlink
+            var redirectTitle = await WikiAPIRequests.GetRedirect(client, title, countryCode);
+            if (redirectTitle != "")
             {
-                //if article is a redirect, fill in correct title and try to get a new langlink
-                var redirectTitle = await WikiAPIRequests.GetRedirect(client, title, countryCode);
-                if (redirectTitle != "")
-                {
-                    result.ttl = redirectTitle;
-                    var redirectLanglink = await WikiAPIRequests.GetLangLink(client, redirectTitle, countryCode);
+                result.ttl = redirectTitle;
+                var redirectLanglink = await WikiAPIRequests.GetLangLink(client, redirectTitle, countryCode);
 
-                    if (redirectLanglink != "")
-                        result.lngl["en"] = redirectLanglink;
-                }
+                if (redirectLanglink != "")
+                    result.lngl["en"] = redirectLanglink;
             }
-
             return result;
         }
     }
