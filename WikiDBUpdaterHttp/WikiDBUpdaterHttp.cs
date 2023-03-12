@@ -68,7 +68,7 @@ namespace WikiDBUpdaterHttp
             DateTime startDate;
             if (YYYYMMDD == null)
                 return new BadRequestObjectResult("Missing parameter: date");
-            if (!validateDate(YYYYMMDD, out startDate))
+            if (!DateTime.TryParse(YYYYMMDD, out startDate))
                 return new BadRequestObjectResult("Bad starting date: " + YYYYMMDD);
 
             int daysToGo = 1;
@@ -96,33 +96,6 @@ namespace WikiDBUpdaterHttp
             return new OkObjectResult("Successfull execution");
         }
 
-        /// <summary>
-        /// Parses the YYYY-MM-DD string into DateTime
-        /// </summary>
-        /// <param name="yyyymmdd">Date in a YYYY-MM-DD format</param>
-        /// <param name="date">out for a date</param>
-        /// <returns>true if date was correctly parsed</returns>
-        bool validateDate(string yyyymmdd, out DateTime date)
-        {
-            date = DateTime.Now;
-            int year, month, day;
-            string[] dateArray = yyyymmdd.Split('-');
-
-            if (dateArray.Length != 3)
-                return false;
-
-            if (!int.TryParse(dateArray[0], out year))
-                return false;
-            if (!int.TryParse(dateArray[1], out month))
-                return false;
-            if (!int.TryParse(dateArray[2], out day))
-                return false;
-
-            date = new DateTime(year, month, day);
-            return true;
-        }
-
-       
         /// <summary>
         /// Validates list of languages in "","","" format
         /// </summary>
