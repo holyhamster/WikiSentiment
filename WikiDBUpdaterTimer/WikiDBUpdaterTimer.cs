@@ -11,13 +11,14 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Microsoft.Extensions.ObjectPool;
+using System.Linq;
 
 namespace WikiDBUpdaterTimer
 {
     public class WikiDBUpdaterTimer
     {
-        string[] allLanguageCodes;
-        Dictionary<string, string[]> articleExceptions;
+        HashSet<string> allLanguageCodes;
+        Dictionary<string, HashSet<string>> articleExceptions;
 
         [FunctionName("WikiDBUpdaterTimer")]
         public async Task Run([TimerTrigger("0 0 6 * * *")]TimerInfo myTimer,
@@ -33,8 +34,12 @@ namespace WikiDBUpdaterTimer
 
             ConfigurationWrapper config = new ConfigurationWrapper(rawConfig);
 
-            articleExceptions = config.GetValue<Dictionary<string, string[]>>("FunctionValues:CountryExceptions");
-            allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes");
+            var exceptionsArrays = config.GetValue<Dictionary<string, string[]>>("FunctionValues:CountryExceptions");
+            articleExceptions = new Dictionary<string, HashSet<string>>();
+            foreach (var iKey in exceptionsArrays.Keys)
+                articleExceptions[iKey] = exceptionsArrays[iKey].ToHashSet();
+
+            allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes").ToHashSet();
             //articleExceptions = getLanguageExceptions(config);
 
             var date = DateTime.Now.AddDays(-1);
