@@ -34,11 +34,12 @@ namespace WikiDBUpdaterHttp
         {
             config = new ConfigurationWrapper(iConfig);
 
-            var exceptionList = config.GetValue<Dictionary<string, string[]>>
+            var exceptionsArrays = config.GetValue<Dictionary<string, string[]>>
                 ("FunctionValues:CountryExceptions");
+
             articleExceptions = new Dictionary<string, HashSet<string>>();
-            foreach (var iKey in exceptionList.Keys)
-                articleExceptions[iKey] = exceptionList[iKey].ToHashSet();
+            foreach (var iKey in exceptionsArrays.Keys)
+                articleExceptions[iKey] = exceptionsArrays[iKey].ToHashSet();
 
             allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes").ToHashSet();
 
