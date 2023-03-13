@@ -36,12 +36,12 @@ namespace WikiSentiment
             JsonNode langlinkNode = JsonNode.Parse(langlinkResponse).AsObject()["query"]["pages"];
 
             var articleID = JsonSerializer.Deserialize<Dictionary<string, JsonNode>>(langlinkNode).Keys.First();
-
+            var langlink = langlinkNode[articleID];
             //if article has an english counterpart, it'll have a langlink
-            if (langlinkNode[articleID].AsObject().ContainsKey("langlinks"))
+            if (langlink.AsObject().ContainsKey("langlinks"))
             {
                 //TODO add conditions
-                return normalizeTitle((string)langlinkNode[articleID]["langlinks"][0]["*"]);
+                return normalizeTitle((string)langlink["langlinks"][0]["*"]);
             }
             else
                 return "";
@@ -101,14 +101,8 @@ namespace WikiSentiment
 
             var articleArray = new (string title, int views)[jArticleArray.Count];
 
-            for (int i = 0; i < jArticleArray.Count; i++)
-            {
-                articleArray[i] = (
-                    normalizeTitle((string)jArticleArray[i]["article"].AsValue()), 
-                    (int)jArticleArray[i]["views"].AsValue());
-            }
-
-            return articleArray;
+            return (from x in jArticleArray
+                    select ((string)x["article"].AsValue(), (int)x["views"].AsValue())).ToArray(); ;
         }
 
         /// <summary>
@@ -129,14 +123,15 @@ namespace WikiSentiment
             JsonObject jObject = JsonNode.Parse(viewsString).AsObject();
 
             //validate object and return total views
-            if (jObject.ContainsKey("items") &&
-                jObject["items"].AsArray().Count > 0 &&
-                jObject["items"][0].AsObject().ContainsKey("views") )
+            if (!jObject.ContainsKey("items") ||
+                jObject["items"].AsArray().Count == 0 ||
+                !jObject["items"][0].AsObject().ContainsKey("views") )
             {
-                return (int)JsonNode.Parse(viewsString).AsObject()["items"][0]["views"];
+                throw new HttpRequestException($"Http response has bad format. Date: {date}; language:{languageCode}");
             }
 
-            throw new HttpRequestException($"Http response has bad format. Date: {date}; language:{languageCode}");
+            return (int)JsonNode.Parse(viewsString).AsObject()["items"][0]["views"];
+
         }
 
         
