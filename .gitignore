@@ -361,9 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/AzureSentiment.sln
 /WikiDBUpdaterHttp/host.json
-/WikiDBUpdaterHttp/WikiDBUpdaterHttp.csproj
-/WikiDBUpdaterTimer/WikiDBUpdaterTimer.csproj
-/WikiSentiment/WikiSentiment.csproj
 /WikiDBUpdaterTimer/Properties/ServiceDependencies/wikisentiment1353519 - Zip Deploy/profile.arm.json
