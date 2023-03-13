@@ -148,10 +148,7 @@ namespace WikiSentiment
         /// <returns></returns>
         static string stripSubmenuLink(string title)
         {
-            if (title.Contains('#'))
-                return title.Split('#', 2)[0];
-            else
-                return title;
+            return title.Split('#', 2)[0];
         }
     }
 }
