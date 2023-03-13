@@ -95,14 +95,14 @@ namespace WikiSentiment.DataObjects
             Dictionary<string, LanguageCollection> collection, int featuredAmount)
         {
             //compile the list of country codes and viewership scores for top articles
-            var languageTopArticlesData = new List<(string countrycode, float percentage)>();
-            collection.Select(kvp => (kvp.Key,
+            List<(string countrycode, float percentage)> languageTopArticlesData;
+            languageTopArticlesData = collection.Select(kvp => (kvp.Key,
                     (100f * kvp.Value.articles[0].vws) / kvp.Value.totalviews)).ToList();
             
             //order data in the descending order
             languageTopArticlesData = 
                 (languageTopArticlesData.OrderBy(data => data.percentage)).Reverse().ToList();
-
+ 
             return languageTopArticlesData
                .Take(featuredAmount)
                .Select(x => x.countrycode)
