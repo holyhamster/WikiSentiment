@@ -130,7 +130,7 @@ namespace WikiSentiment
                 throw new HttpRequestException($"Http response has bad format. Date: {date}; language:{languageCode}");
             }
 
-            return (int)JsonNode.Parse(viewsString).AsObject()["items"][0]["views"];
+            return (int)jObject["items"][0]["views"];
 
         }
 

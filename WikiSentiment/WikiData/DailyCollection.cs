@@ -67,24 +67,21 @@ namespace WikiSentiment.DataObjects
         /// <summary>
         /// Updates old colection with new content, compiles new featured list
         /// </summary>
-        /// <param name="base"></param>
+        /// <param name="collection"></param>
         /// <param name="newAdditions"></param>
         /// <returns></returns>
-        public static DailyCollection UpdateGiven(DailyCollection @base, DailyCollection newAdditions)
+        public static DailyCollection UpdateGiven(DailyCollection collection, DailyCollection newAdditions)
         {
-            var newCollection = new Dictionary<string, LanguageCollection>(@base.countrydailydict);
-
-            //override old data with new ones
-            foreach(string iCountry in newAdditions.countrydailydict.Keys)
-            {
-                newCollection[iCountry] = newAdditions.countrydailydict[iCountry];
-            }
-            var featured = getFeaturedCountries(newCollection, featureArticles);
+            var oldDictionary = collection.countrydailydict;
+            var newDictionary = newAdditions.countrydailydict;
 
             return new DailyCollection()
             {
-                countrydailydict = newCollection,
-                featuredlist = featured
+                countrydailydict = newDictionary
+                .Concat(oldDictionary.Where(kvp => !newDictionary.ContainsKey(kvp.Key)))
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+
+                featuredlist = getFeaturedCountries(newDictionary, featureArticles)
             };
         }
 
@@ -99,23 +96,17 @@ namespace WikiSentiment.DataObjects
         {
             //compile the list of country codes and viewership scores for top articles
             var languageTopArticlesData = new List<(string countrycode, float percentage)>();
-            foreach (string iLanguage in collection.Keys)
-            {
-                languageTopArticlesData.Add((iLanguage,
-                    (100f * collection[iLanguage].articles[0].vws) / collection[iLanguage].totalviews));
-            }
-
-            //order data in the descending order
-            languageTopArticlesData = (languageTopArticlesData.OrderBy(data => data.percentage)).Reverse().ToList();
-
-            var amountToFeature = Math.Min(featuredAmount, collection.Count);
-            List<string> result = new List<string>();
-
-            //return countrycodes
-            for (int i = 0; i < amountToFeature; i++)
-                result.Add(languageTopArticlesData[i].countrycode);
+            collection.Select(kvp => (kvp.Key,
+                    (100f * kvp.Value.articles[0].vws) / kvp.Value.totalviews)).ToList();
             
-            return result;
+            //order data in the descending order
+            languageTopArticlesData = 
+                (languageTopArticlesData.OrderBy(data => data.percentage)).Reverse().ToList();
+
+            return languageTopArticlesData
+               .Take(featuredAmount)
+               .Select(x => x.countrycode)
+               .ToList();
         }
 
         public string ToJSON()
