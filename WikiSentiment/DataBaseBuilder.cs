@@ -39,14 +39,14 @@ namespace WikiSentiment
                     try
                     {
                         oldDaily = JsonSerializer.Deserialize<DailyCollection>(dbRequest);
+                        if (oldDaily != null && oldDaily.IsValid())
+                            newCollection = DailyCollection.UpdateGiven(oldDaily, newCollection);
                     }
                     catch (Exception _ex)
                     {
                         logger.LogError($"Skipped reading old data on " +
                             $"{date.Year}-{date.Month}-{date.Day:D2}: ${_ex}");
-                    }
-                    if (oldDaily != null && oldDaily.IsValid())
-                        newCollection = DailyCollection.UpdateGiven(oldDaily, newCollection);
+                    }       
                 }
 
 
