@@ -20,10 +20,8 @@ namespace WikiSentiment
         public static async Task<string> GetLangLink(
                 HttpClient client, string title, string countryCode)
         {
-            string languageTarget = "en";
             title = stripSubmenuLink(title);
-            JsonNode langlinkNode;
-
+            const string languageTarget = "en";
             string url = $"https://{countryCode}.wikipedia.org/w/api.php?action=query&titles=" +
                 $"{title}&prop=langlinks&format=json&lllang={languageTarget}";
 
@@ -35,7 +33,7 @@ namespace WikiSentiment
                     JsonNode.Parse(langlinkResponse).AsObject()["query"].AsObject().ContainsKey("pages")))
                 return "";
 
-            langlinkNode = JsonNode.Parse(langlinkResponse).AsObject()["query"]["pages"];
+            JsonNode langlinkNode = JsonNode.Parse(langlinkResponse).AsObject()["query"]["pages"];
 
             var articleID = JsonSerializer.Deserialize<Dictionary<string, JsonNode>>(langlinkNode).Keys.First();
 
