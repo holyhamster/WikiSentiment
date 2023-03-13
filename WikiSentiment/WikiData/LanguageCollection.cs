@@ -30,7 +30,6 @@ namespace WikiSentiment.DataObjects
             string languageCode, Dictionary<string, HashSet<string>> exceptions,
             int keepMax)
         {
-            //get total views for a regional wikipedia
             var totalviews = await WikiAPIRequests.GetTotalViews(client, languageCode, date);
 
             //get raw (title, views) data
@@ -40,11 +39,9 @@ namespace WikiSentiment.DataObjects
 
             foreach (var iEntry in articleEntries)
             {
-                //stop when created enough articles
                 if (createdArticles.Count >= keepMax)
                     break;
 
-                //if the article name is not on the exceptions list
                 if (isException(iEntry.title, languageCode, exceptions))
                     continue;
 
