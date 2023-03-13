@@ -31,8 +31,8 @@ namespace WikiSentiment
             var jsonObject = JsonNode.Parse(langlinkResponse);
 
             //validate json response, return empty string if failed
-            if (!jsonObject.AsObject().ContainsKey("query") ||
-                !JsonNode.Parse(langlinkResponse).AsObject()["query"].AsObject().ContainsKey("pages"))
+            if (!(jsonObject.AsObject().ContainsKey("query") &&
+                    JsonNode.Parse(langlinkResponse).AsObject()["query"].AsObject().ContainsKey("pages")))
                 return "";
 
             langlinkNode = JsonNode.Parse(langlinkResponse).AsObject()["query"]["pages"];
