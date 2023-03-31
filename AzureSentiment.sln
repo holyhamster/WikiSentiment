@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiDBUpdaterHttp", "WikiDB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiSentiment", "WikiSentiment\WikiSentiment.csproj", "{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "FrontApp", "frontapp\FrontApp.esproj", "{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
