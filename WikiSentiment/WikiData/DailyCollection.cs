@@ -61,9 +61,9 @@ namespace WikiSentiment.DataObjects
             {
                 countrydailydict = regionalCollections,
                 featuredlist = featuredCountries
-            }; ;
+            };
         }
-
+        
         /// <summary>
         /// Updates old colection with new content, compiles new featured list
         /// </summary>
