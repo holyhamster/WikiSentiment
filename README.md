@@ -1,13 +1,17 @@
-# Wiki Sentiment
 
-![wikichartslogo_preview](https://user-images.githubusercontent.com/27297124/229101784-325c387c-43dc-4922-b1cd-c322c6b35e5b.png)
+# Wikich.art
 
-![Screenshot 2023-03-31 123047](https://user-images.githubusercontent.com/27297124/229101397-ebcbb1c6-3077-4f06-bfab-519818a58536.png)
+Project about collecting, compiling and presenting daily trending topics from different regions of wikipedia.
 
-Collects regional data from wikipedia API (titles, views, language links) and uploads them into a database.
+Powered by Microsoft Azure and Wikipedia API.
+<p align="center">
 
-/WikiSentiment/ contains all data and API request classes
+<h2 align="center"> <a href="https://www.wikich.art"> Check out live app!</a> </h2> <br>
 
-/UpdaterHttp/ is an azure function triggered by http request
+<p align="center">
+<img src="https://user-images.githubusercontent.com/27297124/229155261-454b13d4-0734-4cfd-9d3e-15e6ee5f48b4.png" /> 
+</p>
 
-/UpdaterTimer/ is an azure function triggered by a timer
+[x] Backend: Azure Function DbUpdaterTimer (or its webhook implementation, DbUpdaterHttp) querries wiki API for data, compiles and sends it into Azure Storage
+
+[x] Frontend: Angular Webapp hosted on Azure Static Webapps with an API Function to querry Storage for data.
