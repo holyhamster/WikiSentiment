@@ -26,7 +26,7 @@ namespace WikiDBUpdaterHttp
 
         private HashSet<string> allLanguageCodes;
 
-        private HttpClient httpClient;
+        private static readonly HttpClient httpClient = new HttpClient();
 
         private Dictionary<string, HashSet<string>> articleExceptions;
 
@@ -42,9 +42,6 @@ namespace WikiDBUpdaterHttp
                 articleExceptions[iKey] = exceptionsArrays[iKey].ToHashSet();
 
             allLanguageCodes = config.GetValue<string[]>("FunctionValues:CountryCodes").ToHashSet();
-
-
-            httpClient = new HttpClient();
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                  config.GetValue<string>("WikiKeys:WikiAPIToken"));
