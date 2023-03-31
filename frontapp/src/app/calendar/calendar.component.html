@@ -1,0 +1,13 @@
+<ngb-datepicker class="bg-light" #dp
+placeholder=""
+[(ngModel)]="model"
+required (navigate)="selectMonth($event)"
+required (ngModelChange)="selectDate($event)"
+required [markDisabled]="isDateBlocked"
+[maxDate]="maxDate"
+[minDate]="minDate"
+required pattern="[0-9]{4}[-][0-9]{2}[-][0-9]{2}"
+></ngb-datepicker>
+
+
+

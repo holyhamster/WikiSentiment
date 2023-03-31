@@ -1,0 +1,53 @@
+<div class="card-body">
+  <div *ngIf="selectedDate; else noData">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <li *ngFor="let id of tabKeys" [ngbNavItem]="id">
+
+        <a ngbNavLink [ngbTooltip]="featuredToolTip">
+          <div *ngIf="id == featured; else countryFlag">⭐</div>
+          <ng-template #countryFlag><img src={{tagStrings.GetFlagPath(id)}} class="rounded border"></ng-template>
+
+          <ng-template #featuredToolTip>
+            <b>
+            <div *ngIf="id == featured; else countryTooltop">Featured</div>
+            <ng-template #countryTooltop>{{tagStrings.GetNameLong(id)}}</ng-template>
+            </b>
+          </ng-template>
+          <ng-template #countryToolTip><b>{{tagStrings.GetNameLong(id)}}</b></ng-template>
+        </a>
+
+        <ng-template ngbNavContent>
+          <h5 class="card-title">
+            <div *ngIf="selectedDate.GetArticles(id).length > 0; else noData">
+
+              <app-entrytable
+              [entryArray]="selectedDate.GetArticles(id)"
+              [tag]="id"
+              [date]="selectedDate.date"
+              [featured]="id == featured"></app-entrytable>
+
+            </div>
+            <ng-template #noData>Error reading the data</ng-template>
+          </h5>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
+
+  <ng-template #noData>
+    <div class="container" style="height:100%">
+    <div class="d-flex align-items-start flex-column mt-4">
+    <div class="p-2"><h3><b>Pick a date and explore what people are reading around the globe!</b></h3></div>
+    <div class="p-2 mt-5"><h5><i>
+      Data comes from wikipedia API, <a href="https://wikimediafoundation.org/support/">support Wikimedia Foundation</a> <br>
+      Check out the code for this project at <a href="https://github.com/holyhamster/WikiSentiment">GitHub</a>
+    </i></h5></div>
+    </div>
+  </div>
+  </ng-template>
+</div>
+
+
+
+

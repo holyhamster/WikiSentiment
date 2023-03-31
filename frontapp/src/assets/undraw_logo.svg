@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   data-name="Layer 1"
+   width="145.97672"
+   height="165.20436"
+   viewBox="0 0 145.97672 165.20436"
+   version="1.1"
+   id="svg112"
+   sodipodi:docname="undraw_logo.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata118">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs116" />
+  <sodipodi:namedview
+     fit-margin-bottom="0"
+     fit-margin-right="0"
+     fit-margin-left="0"
+     fit-margin-top="0"
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview114"
+     showgrid="false"
+     inkscape:zoom="1.9957906"
+     inkscape:cx="261.27498"
+     inkscape:cy="116.91313"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg112" />
+  <path
+     d="M 122.24167,9.7173369 A 53.27522,53.27522 0 0 0 48.008673,22.600207 v 0 C 31.067323,46.656577 14.067963,109.73842 26.067813,146.28221 61.860383,108.47535 116.84848,104.54676 135.12454,83.950327 154.65317,61.942307 146.29806,26.658677 122.24167,9.7173369 Z"
+     fill="#bc52e8"
+     id="path46"
+     style="fill:#ffffff;fill-opacity:1" />
+  <circle
+     id="b452c1c8-53ab-4ced-a544-b8816c88fdab"
+     data-name="af3c8991-f89c-43e0-a050-89c81726f2a6"
+     cx="90.841911"
+     cy="46.81662"
+     r="17.374821"
+     fill="#ffffff"
+     style="fill:#bc52e8;fill-opacity:1" />
+  <circle
+     id="a24bae02-bdbe-4fd0-a0d6-bc02ca4e3c9e"
+     data-name="a49e5b2e-c339-415c-b240-8977b61bd9a6"
+     cx="11.38013"
+     cy="153.82423"
+     r="11.38013"
+     fill="#bc52e8"
+     style="fill:#ffffff;fill-opacity:1" />
+</svg>

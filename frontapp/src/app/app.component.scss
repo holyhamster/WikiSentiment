@@ -1,0 +1,14 @@
+html {
+  background-image: url('../assets/undraw_world.svg');
+  background-position: bottom right;
+  background-size: 35%;
+  background-repeat: no-repeat;
+  margin: 0vh;
+  height: 100vh;
+}
+
+@media (max-width: 992px) {
+  html {
+    background-position: center right;
+  }
+};

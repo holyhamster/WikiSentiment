@@ -363,3 +363,15 @@ MigrationBackup/
 FodyWeavers.xsd
 /WikiDBUpdaterHttp/host.json
 /WikiDBUpdaterTimer/Properties/ServiceDependencies/wikisentiment1353519 - Zip Deploy/profile.arm.json
+/frontapp/.vscode
+/frontapp/src/assets/.gitkeep
+/frontapp/tsconfig.spec.json
+/frontapp/tsconfig.json
+/frontapp/tsconfig.app.json
+/frontapp/package.json
+/frontapp/nuget.config
+/frontapp/karma.conf.js
+/frontapp/angular.json
+/frontapp/.gitignore
+/frontapp/.editorconfig
+/frontapp/src/proxy.conf.json

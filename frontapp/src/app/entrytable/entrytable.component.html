@@ -1,0 +1,76 @@
+<h5>
+    <div class="d-none d-lg-block">
+        <table class="table">
+            <div *ngIf="featured; then featuredList else countryList"></div>
+            <ng-template #featuredList>
+            <thead>
+                <tr>
+                    <th scope="col">Lang.</th>
+                    <th scope="col">Views</th>
+                    <th scope="col">Article</th>
+                    <th scope="col">English</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let iEntry of entryArray; index as i">
+                    <td class="col-1"> <img src={{tagStrings.GetFlagPath(iEntry.country)}} class="border"
+                        [ngbTooltip]="countryTooltip"placement="end"></td>
+                    <td class="col-1"> <div [ngbTooltip]="percentageTooltip"> {{iEntry.percentage }}% </div></td>
+                    <td class="col-5"> <a href={{iEntry.oglink}} target ="_blank">{{iEntry.ogtitle}}</a> </td>
+                    <td class="col-5"> <a href={{iEntry.enlink}} target ="_blank">{{iEntry.entitle}}</a> </td>
+                    <ng-template #countryTooltip>{{tagStrings.GetNameLong(iEntry.country)}}</ng-template>
+                    <ng-template #percentageTooltip>{{iEntry.viewsString}} / {{iEntry.totalviewsString}}</ng-template>
+                </tr>
+            </tbody>
+            </ng-template>
+            <ng-template #countryList>
+                <thead>
+                    <tr>
+                        <th scope="col">Views</th>
+                        <th scope="col">Article</th>
+                        <div *ngIf="tag != 'en'; then englishColumn"></div>
+                        <ng-template #englishColumn><th scope="col">English</th></ng-template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let iEntry of entryArray; index as i">
+                        <td class="col-3"> {{iEntry.percentage}}% ({{iEntry.viewsString}})  </td>
+                        <td class="col-5"> <a href={{iEntry.oglink}} target ="_blank">{{iEntry.ogtitle}}</a> </td>
+                        <div *ngIf="tag != 'en'; then englishColumn"></div>
+                            <ng-template #englishColumn><td class="col-4"> <a href={{iEntry.enlink}} target ="_blank">{{iEntry.entitle}}</a> </td></ng-template>
+                    </tr>
+                </tbody>
+            </ng-template>
+        </table>
+    <div *ngIf="!featured; then viewershipStats"></div>
+    <ng-template #viewershipStats>
+        <b>{{entryArray[0].totalviewsString}} total daily views on {{tag}}.wikipedia.org</b>
+    </ng-template>
+    <div *ngIf="tag == 'vi'; then viTooltip"></div>
+    <ng-template #viTooltip>
+        <br> <br>
+        <i>*article <a href="https://vi.wikipedia.org/wiki/%C4%90%C3%A0i_Ti%E1%BA%BFng_n%C3%B3i_Vi%E1%BB%87t_Nam">Đài Tiếng nói Việt Nam</a> (<a href="https://en.wikipedia.org/wiki/Voice_of_Vietnam">Voice of Vietnam</a>)
+        has been excluded from metrics, <br> it consistently gets a bigger proportion of hits than almost anything else (including the front page).</i>
+    </ng-template>
+    </div>
+
+    <div class="d-lg-none">
+        <div *ngFor="let iEntry of entryArray; index as i" >
+            <span *ngIf="featured">
+            <img src={{tagStrings.GetFlagPath(iEntry.country)}} style="width:1.5em; height:auto" class="border" [ngbTooltip]="countryTooltip" placement="end"></span>
+            &nbsp;<a href={{iEntry.oglink}} target ="_blank">{{iEntry.ogtitle}}</a>
+            <br>
+                &nbsp;{{iEntry.percentage}}% of views ({{iEntry.viewsString}} / {{iEntry.totalviewsString}})
+            <br>
+            <div *ngIf="iEntry.entitle !=''">
+            <a href={{iEntry.enlink}} target ="_blank">{{iEntry.entitle}}</a>
+            <br>
+            </div>
+            <hr>
+
+            <div style="border-bottom: 1em"></div>
+            <ng-template #countryTooltip>{{tagStrings.GetNameLong(iEntry.country)}}</ng-template>
+            <ng-template #percentageTooltip>{{iEntry.viewsString}} / {{iEntry.totalviewsString}}</ng-template>
+        </div>
+    </div>
+</h5>

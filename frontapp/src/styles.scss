@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+$primary: #bc52e8;
+/*$body-bg: #7F167F;*/
+$info: #3b3b3e;
+$success: #6e937e;
+$warning: #eb8346;
+$danger: #f44336;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+/*@media (max-width: 800px) {
+    h5 {font-size:1rem;}
+ };
+
+ @media (max-width: 600px) {
+    h5 {font-size:0.75rem;}
+ };*/
