@@ -17,8 +17,9 @@ using Azure.Core.Cryptography;
 namespace DBUpdaterHttp
 {
     /// <summary>
-    /// HTTP triggered Azure Function
-    /// Grabs parameter from the url and calls DBUpdater
+    /// HTTP triggered Azure Function that grabs parameters from the url 
+    /// and initiates DataBaseBuilder
+    /// url schema is /DBUpdaterHttp?date=2021-12-31&days=10
     /// </summary>
     public class DBUpdaterHttp
     {
@@ -50,21 +51,14 @@ namespace DBUpdaterHttp
                 config.GetValue<string>("WikiKeys:WikiUserContact"));
         }
 
-        /// <summary>
-        /// Azure binding that launches the function
-        /// </summary>
-        /// <param name="req"></param>
-        /// <param name="tableClient"></param>
-        /// <param name="log"></param>
-        /// <returns></returns>
-        [FunctionName("WikiDBUpdaterHttp")]
+        [FunctionName("DBUpdaterHttp")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             [Table("datatables"), StorageAccount("AzureWebJobsStorage")] TableClient tableClient, 
             ILogger log)
         {
-            //url schema is /WikiDBUpdaterHttp?date=2021-12-31&days=3&discard&language=de,fr
-            //everything except date is optional
+            //url schema is /DBUpdaterHttp?date=2021-12-31&days=3&discard&language=de,fr
+            //in the example the data will start from 31-12-2021, and go back for 3 days
             string YYYYMMDD = req.Query["date"];
             DateTime startDate;
             if (YYYYMMDD == null)

@@ -1,4 +1,4 @@
-//Language tag strings for the table
+//Language tag strings for the data table
 
 export class CountryFlags
 {

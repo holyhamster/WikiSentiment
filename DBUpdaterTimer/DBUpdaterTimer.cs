@@ -15,6 +15,9 @@ using System.Linq;
 
 namespace DBUpdaterTimer
 {
+    /// <summary>
+    /// Timer activated Azure Function that initiates DataBaseBuilder every 24 hours
+    /// </summary>
     public class DBUpdaterTimer
     {
         HashSet<string> allLanguageCodes;
