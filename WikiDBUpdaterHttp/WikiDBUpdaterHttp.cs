@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Azure.Data.Tables;
-using WikiSentiment;
+using WikiLibrary;
 using Azure.Core.Cryptography;
 
 namespace WikiDBUpdaterHttp

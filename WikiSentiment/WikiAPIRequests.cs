@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
-namespace WikiSentiment
+namespace WikiLibrary
 {
     /// <summary>
     /// Collection of API requests that parse json data

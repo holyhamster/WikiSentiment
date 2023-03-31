@@ -3,9 +3,9 @@ using System;
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Text;
-using WikiSentiment.DataObjects;
+using WikiLibrary.DataObjects;
 
-namespace WikiSentiment
+namespace WikiLibrary
 {
     public static class DataBaseBuilder
     {

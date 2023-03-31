@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WikiSentiment
+namespace WikiLibrary
 {
     /// <summary>
     /// Wraps IConfiguration, allowing it to work with localsettings.json as well as Azure Configurations

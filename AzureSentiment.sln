@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiDBUpdaterTimer", "WikiD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiDBUpdaterHttp", "WikiDBUpdaterHttp\WikiDBUpdaterHttp.csproj", "{AD15B74B-4067-484B-B0D5-F6FB1A02065C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiSentiment", "WikiSentiment\WikiSentiment.csproj", "{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiLibrary", "WikiSentiment\WikiLibrary.csproj", "{A89ED8DF-81F5-4F3B-A99D-734FEEFDED3A}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "FrontApp", "frontapp\FrontApp.esproj", "{4CC281BF-4300-44B3-89C9-B7382AF5BDF4}"
 EndProject

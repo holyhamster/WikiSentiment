@@ -1,7 +1,7 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 
-namespace WikiSentiment
+namespace WikiLibrary
 {
     /// <summary>
     /// API wrapper for azure table storage

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WikiSentiment.DataObjects
+namespace WikiLibrary.DataObjects
 {
     //POJO for collection of articles in single language
     public class LanguageCollection

@@ -6,7 +6,7 @@ using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
-using WikiSentiment;
+using WikiLibrary;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Text.Json;

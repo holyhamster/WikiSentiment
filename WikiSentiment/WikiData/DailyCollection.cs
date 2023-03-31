@@ -7,7 +7,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WikiSentiment.DataObjects
+namespace WikiLibrary.DataObjects
 {
     /// <summary>
     /// POJO class for a collection of languages for a single day

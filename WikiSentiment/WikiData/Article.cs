@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WikiSentiment.DataObjects
+namespace WikiLibrary.DataObjects
 {
     /// <summary>
     /// POJO class for a single wikipedia title
