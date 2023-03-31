@@ -14,13 +14,13 @@ using Azure.Data.Tables;
 using WikiLibrary;
 using Azure.Core.Cryptography;
 
-namespace WikiDBUpdaterHttp
+namespace DBUpdaterHttp
 {
     /// <summary>
     /// HTTP triggered Azure Function
     /// Grabs parameter from the url and calls DBUpdater
     /// </summary>
-    public class WikiDBUpdaterHttp
+    public class DBUpdaterHttp
     {
         private ConfigurationWrapper config;
 
@@ -30,7 +30,7 @@ namespace WikiDBUpdaterHttp
 
         private Dictionary<string, HashSet<string>> articleExceptions;
 
-        public WikiDBUpdaterHttp(IConfiguration iConfig)
+        public DBUpdaterHttp(IConfiguration iConfig)
         {
             config = new ConfigurationWrapper(iConfig);
 

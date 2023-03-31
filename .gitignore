@@ -375,3 +375,8 @@ FodyWeavers.xsd
 /frontapp/.gitignore
 /frontapp/.editorconfig
 /frontapp/src/proxy.conf.json
+/DBUpdaterHttp/.gitignore
+/DBUpdaterTimer/Properties/ServiceDependencies/wikisentiment1353519 - Zip Deploy/profile.arm.json
+/DBUpdaterTimer/.gitignore
+/WikiDBUpdaterHttp/.gitignore
+/WikiDBUpdaterTimer/.gitignore

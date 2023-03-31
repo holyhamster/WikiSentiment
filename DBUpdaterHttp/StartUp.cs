@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: FunctionsStartup(typeof(WikiDBUpdaterHttp.Startup))]
+[assembly: FunctionsStartup(typeof(DBUpdaterHttp.Startup))]
 
-namespace WikiDBUpdaterHttp
+namespace DBUpdaterHttp
 {
     public class Startup : FunctionsStartup
     {

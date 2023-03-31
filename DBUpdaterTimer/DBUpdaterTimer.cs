@@ -13,9 +13,9 @@ using System.Text.Json;
 using Microsoft.Extensions.ObjectPool;
 using System.Linq;
 
-namespace WikiDBUpdaterTimer
+namespace DBUpdaterTimer
 {
-    public class WikiDBUpdaterTimer
+    public class DBUpdaterTimer
     {
         HashSet<string> allLanguageCodes;
         Dictionary<string, HashSet<string>> articleExceptions;
