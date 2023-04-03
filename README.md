@@ -20,5 +20,5 @@ Powered by Microsoft Azure and Wikipedia API.
 
 ## Frontend:
 
-- <a href=https://github.com/holyhamster/WikichArt/tree/master/frontapp/src>Angular Webapp</a> hosted on Azure Static Webapps
-- <a href=https://github.com/holyhamster/WikichArt/tree/master/frontapp/api>API</a> that's hosted as another Azure Function and is called by the webapp to request data from Azure Storage
+- <a href=https://github.com/holyhamster/WikichArt/tree/master/frontapp/src>Angular web app</a> built with bootstrap and hosted on Azure Static Webapps.
+- The app requests data from <a href=https://github.com/holyhamster/WikichArt/tree/master/frontapp/api>API</a>, another Azure Function with connection to Storage Account
