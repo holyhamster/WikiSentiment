@@ -1,7 +1,7 @@
 
 # Wikich.art
 
-Project about collecting, compiling and presenting daily trending topics from different regions of wikipedia.
+This project creates a dynamic overview of Wikipedia’s daily trends across regions.
 
 Powered by Microsoft Azure and Wikipedia API.
 <p align="center">
