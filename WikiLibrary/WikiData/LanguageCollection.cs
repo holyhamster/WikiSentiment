@@ -30,10 +30,10 @@ namespace WikiLibrary.DataObjects
             string languageCode, Dictionary<string, HashSet<string>> exceptions,
             int keepMax)
         {
-            var totalviews = await WikiAPIRequests.GetTotalViews(client, languageCode, date);
+            var totalviews = await API.TotalViews.Get(client, languageCode, date);
 
             //get raw (title, views) data
-            var articleEntries = await WikiAPIRequests.GetArticleList(client, languageCode, date);
+            var articleEntries = await API.Articles.Get(client, languageCode, date);
 
             var createdArticles = new Dictionary<string, Article>();
 

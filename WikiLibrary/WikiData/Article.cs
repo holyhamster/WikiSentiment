@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WikiLibrary.API;
 
 namespace WikiLibrary.DataObjects
 {
@@ -36,7 +37,7 @@ namespace WikiLibrary.DataObjects
             };
 
             //get english title of given article
-            string langlinkTitle = await WikiAPIRequests.GetLangLink(client, title, countryCode);
+            string langlinkTitle = await Langlink.Get(client, title, countryCode);
 
             //if failed to get english article, check if its a redirect and try again
             if (langlinkTitle != "")
@@ -46,11 +47,11 @@ namespace WikiLibrary.DataObjects
             }
 
             //if article is a redirect, fill in correct title and try to get a new langlink
-            var redirectTitle = await WikiAPIRequests.GetRedirect(client, title, countryCode);
+            var redirectTitle = await Redirect.Get(client, title, countryCode);
             if (redirectTitle != "")
             {
                 result.ttl = redirectTitle;
-                var redirectLanglink = await WikiAPIRequests.GetLangLink(client, redirectTitle, countryCode);
+                var redirectLanglink = await Langlink.Get(client, redirectTitle, countryCode);
 
                 if (redirectLanglink != "")
                     result.lngl["en"] = redirectLanglink;
