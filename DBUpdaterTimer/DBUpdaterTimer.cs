@@ -48,9 +48,10 @@ namespace DBUpdaterTimer
             var date = DateTime.Now.AddDays(-1);
             bool discardOldData = true;
             int daysToUpdate = 1;
-
+            var httpClient = getHttpClient(config, log);
             await DataBaseBuilder.updateDatabase(date, daysToUpdate, discardOldData, allLanguageCodes, 
-                articleExceptions, getHttpClient(config, log), new AzureStorageClient(tableClient), log);
+                articleExceptions, httpClient, new AzureStorageClient(tableClient), log);
+            httpClient.Dispose();
         }
 
         HttpClient getHttpClient(ConfigurationWrapper config, ILogger log)
