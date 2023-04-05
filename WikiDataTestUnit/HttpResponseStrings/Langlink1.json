@@ -1,0 +1,24 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "normalized": [
+      {
+        "from": "Byzantinisches_Reich",
+        "to": "Byzantinisches Reich"
+      }
+    ],
+    "pages": {
+      "585": {
+        "pageid": 585,
+        "ns": 0,
+        "title": "Byzantinisches Reich",
+        "langlinks": [
+          {
+            "lang": "en",
+            "*": "Byzantine Empire"
+          }
+        ]
+      }
+    }
+  }
+}

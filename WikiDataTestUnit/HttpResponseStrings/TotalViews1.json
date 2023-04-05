@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "project": "en.wikipedia",
+      "access": "all-access",
+      "agent": "user",
+      "granularity": "daily",
+      "timestamp": "2023040100",
+      "views": 242656071
+    }
+  ]
+}

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WikiLibrary.API
 {
-    internal class Langlink
+    public static class Langlink
     {
         public static async Task<string> Get(
                HttpClient client, string title, string countryCode)

@@ -1,0 +1,63 @@
+﻿{
+	"items": [
+		{
+			"project": "en.wikipedia",
+			"access": "all-access",
+			"year": "2023",
+			"month": "04",
+			"day": "01",
+			"articles": [
+				{
+					"article": "Main_Page",
+					"views": 4331243,
+					"rank": 1
+				},
+				{
+					"article": "Special:Search",
+					"views": 1163225,
+					"rank": 2
+				},
+				{
+					"article": "Indian_Premier_League",
+					"views": 831656,
+					"rank": 3
+				},
+				{
+					"article": "2023_Indian_Premier_League",
+					"views": 579122,
+					"rank": 4
+				},
+				{
+					"article": "Caitlin_Clark",
+					"views": 413078,
+					"rank": 5
+				},
+				{
+					"article": "Fool's_Gold_Loaf",
+					"views": 389304,
+					"rank": 6
+				},
+				{
+					"article": "April_Fools'_Day",
+					"views": 334238,
+					"rank": 7
+				},
+				{
+					"article": "WrestleMania_39",
+					"views": 323190,
+					"rank": 8
+				},
+				{
+					"article": "ChatGPT",
+					"views": 299135,
+					"rank": 9
+				},
+				{
+					"article": "List_of_American_films_of_2023",
+					"views": 238867,
+					"rank": 10
+				}
+			]
+		}
+	]
+}
