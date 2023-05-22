@@ -87,7 +87,6 @@ namespace DBUpdaterHttp
 
             await DataBaseBuilder.updateDatabase(startDate, daysToGo, discardOldData, languages, 
                 articleExceptions, httpClient, dbClient, log);
-            httpClient.Dispose();
             return new OkObjectResult("Successfull execution");
         }
 
